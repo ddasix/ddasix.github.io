@@ -10,3 +10,12 @@ function sum(x,y){
 	return x+y;
 }
 ```
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+	</body>
+</html>
+```
