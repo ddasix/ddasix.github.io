@@ -13,9 +13,14 @@ function sum(x,y){
 ```html
 <!DOCTYPE html>
 <html>
-	<head>
-	</head>
-	<body>
-	</body>
+<head>
+	<script>
+		;(function(){
+			alert('markdown');
+		})();
+	<script>
+</head>
+<body>
+</body>
 </html>
 ```
