@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
 	<meta charset='utf-8'>
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -9,11 +9,18 @@
 	<link rel="stylesheet" href="stylesheets/core.css" media="screen">
 	<link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
 	<link rel="stylesheet" href="stylesheets/pygment_trac.css">
+	<link rel="stylesheet" href="stylesheets/ui-grid.min.css">
 
 	<script type="text/javascript" src="javascripts/modernizr.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-touch.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-animate.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
+    <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
 	<script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+	<script type="text/javascript" src="javascripts/ui-grid.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$('#main_content').headsmart()
@@ -51,8 +58,38 @@
 		background: #EEE;
 	}
 	.row-label { width: 2em; }
-
+	.grid {
+		width: 500px;
+		height: 250px;
+	}
 	</style>
+	<script>
+	var app = angular.module('app', ['ngTouch', 'ui.grid']);
+ 
+		app.controller('MainCtrl', ['$scope', function ($scope) {
+		 
+		  $scope.myData = [
+		    {
+		        "firstName": "Cox",
+		        "lastName": "Carney",
+		        "company": "Enormo",
+		        "employed": true
+		    },
+		    {
+		        "firstName": "Lorraine",
+		        "lastName": "Wise",
+		        "company": "Comveyer",
+		        "employed": false
+		    },
+		    {
+		        "firstName": "Nancy",
+		        "lastName": "Waters",
+		        "company": "Fuelton",
+		        "employed": false
+		    }
+		];
+	}]);
+	</script>
 </head>
 <body>
 	<a id="forkme_banner" href="https://github.com/ddasix">View on GitHub</a>
@@ -72,7 +109,7 @@
 			<span class="inner"></span>
 		</div>
 		<span class="banner-fix"></span>
-		<section id="main_content" ng-app>
+		<section id="main_content">
 			<h3><a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>GitHub 페이지에 오신것을 환영합니다.</h3>
 			<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
 
@@ -102,7 +139,7 @@ $ git checkout gh-pages</code></pre>
 			  페이지에 문제가 발생 하면 <a href="https://help.github.com/pages">https://help.github.com/pages</a>을 방문하시거나 <a href="mailto:support@github.com">support@github.com</a>으로 메일을 주시면 도움을 드리겠습니다.
 			  }
 			</p>
-			<div id="spread" ng-controller="sheet">
+			<!-- <div id="spread" ng-controller="sheet">
 				<table>
 					<tr class="column-label">
 						<td></td>
@@ -119,9 +156,11 @@ $ git checkout gh-pages</code></pre>
 						</td>
 					</tr>
 				</table>
-			</div>
+			</div> -->
+			<div ng-controller="MainCtrl">
+		    	<div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
+		    </div>
 		</section>
-
 		<footer>
 			<span class="ribbon-outer">
 				<span class="ribbon-inner">
@@ -134,22 +173,5 @@ $ git checkout gh-pages</code></pre>
 			<span class="octocat"></span>
 		</footer>
 	</div>
-	<script>
-	sheet = function($scope, $parse) {
-		$scope.columns = ['A', 'B', 'C', 'D'];
-		$scope.rows = [1, 2, 3, 4];
-		$scope.cells = {};
-
-		process = function(exp) {
-			return exp.replace(/[A-Z]\d+/g, function(ref) {
-				return 'compute("' + ref + '")';
-			})
-		}
-		$scope.compute = function(cell) {
-			// return $parse($scope.cells[cell])($scope);
-			return $parse(process($scope.cells[cell]))($scope);
-		};
-	}
-	</script>
 </body>
 </html>
