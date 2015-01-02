@@ -64,31 +64,42 @@
 	}
 	</style>
 	<script>
-	var app = angular.module('app', ['ngTouch', 'ui.grid']);
+	var app = angular.module('app', ['ngTouch', 'ui.grid','ui.grid.resizeColumns']);
  
 		app.controller('MainCtrl', ['$scope', function ($scope) {
-		 
-		  $scope.myData = [
-		    {
-		        "firstName": "Cox",
-		        "lastName": "Carney",
-		        "company": "Enormo",
-		        "employed": true
-		    },
-		    {
-		        "firstName": "Lorraine",
-		        "lastName": "Wise",
-		        "company": "Comveyer",
-		        "employed": false
-		    },
-		    {
-		        "firstName": "Nancy",
-		        "lastName": "Waters",
-		        "company": "Fuelton",
-		        "employed": false
-		    }
-		];
-	}]);
+
+			$scope.myData = {
+				enableSorting: false,
+				enableColumnResizing : true,
+			}
+			$scope.myData.columnDefs =  [
+					{field:'firstName', minWidth: 50, width:'25%'},
+					{field:'lastName', width:'25%'},
+					{field:'company', width:'25%'},
+					{field:'employed', width:'25%'}
+			];
+		  	$scope.myData.data = [
+			    {
+			        "firstName": "Cox",
+			        "lastName": "Carney",
+			        "company": "Enormo",
+			        "employed": true
+			    },
+			    {
+			        "firstName": "Lorraine",
+			        "lastName": "Wise",
+			        "company": "Comveyer",
+			        "employed": false
+			    },
+			    {
+			        "firstName": "Nancy",
+			        "lastName": "Waters",
+			        "company": "Fuelton",
+			        "employed": false
+			    }
+			];
+		}
+	]);
 	</script>
 </head>
 <body>
@@ -158,7 +169,7 @@ $ git checkout gh-pages</code></pre>
 				</table>
 			</div> -->
 			<div ng-controller="MainCtrl">
-		    	<div id="grid1" ui-grid="{ data: myData }" class="grid"></div>
+		    	<div id="grid1" ui-grid="myData" class="grid"></div>
 		    </div>
 		</section>
 		<footer>
